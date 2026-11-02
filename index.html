@@ -399,26 +399,28 @@ function dragElement(el, side) {
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 <style id="glass-theme">
 /* ============================================================
-   Glass theme — لوحة التحكم على اليمين + تصميم زجاجي
-   (يُضاف بعد كل الأنماط الأصلية فيتغلّب عليها بدون المساس بالمنطق)
+   Glass theme (فاتح) — لوحة التحكم على اليمين + خلفية لبني سادة
    ============================================================ */
 :root{
-  --brand:#2dd4bf; --brand-d:#14b8a6;
-  --ink:#eef6ff; --mut:rgba(214,228,255,.62);
-  --line:rgba(255,255,255,.16); --card:rgba(255,255,255,.08);
-  --danger:#fb7185;
-  --glass:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
-  --glass-edge:rgba(255,255,255,.24);
-  --glass-hi:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.05);
-  --glass-drop:0 22px 56px rgba(2,8,23,.5);
-  --blur:blur(22px) saturate(165%);
-  --field:rgba(255,255,255,.08);
-  --accent-grad:linear-gradient(135deg,#2dd4bf,#38bdf8 58%,#818cf8);
+  --bgblue:#c7e2f9;
+  --brand:#0284c7; --brand-d:#0369a1;
+  --ink:#0f2740; --mut:rgba(15,39,64,.62);
+  --line:rgba(15,39,64,.14); --card:rgba(255,255,255,.5);
+  --danger:#e11d48;
+  --glass:linear-gradient(160deg,rgba(255,255,255,.78),rgba(255,255,255,.38));
+  --glass-edge:rgba(255,255,255,.9);
+  --glass-hi:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35);
+  --glass-drop:0 24px 56px rgba(30,80,130,.25);
+  --blur:blur(22px) saturate(160%);
+  --field:rgba(255,255,255,.55);
+  --field-line:rgba(15,39,64,.16);
+  --accent-grad:linear-gradient(135deg,#0ea5e9,#2f6fe4 60%,#5b5bd6);
 }
 
-/* ---------- الخلفية: أسود سادة ---------- */
-html{background:#000;scrollbar-color:rgba(255,255,255,.3) transparent}
-body{background:#000;color:var(--ink)}
+/* ---------- الخلفية: لبني سادة ---------- */
+html{background:var(--bgblue);scrollbar-color:rgba(15,39,64,.28) transparent}
+body{background:var(--bgblue);color:var(--ink)}
+
 /* ---------- التخطيط: اللوحة على اليمين ---------- */
 #app{padding:16px;gap:16px}
 #app #details{order:-1}          /* في الـ RTL: أول عنصر = أقصى اليمين */
@@ -434,17 +436,18 @@ body{background:#000;color:var(--ink)}
   box-shadow:var(--glass-drop),var(--glass-hi);
   scrollbar-width:thin;
 }
-#details::-webkit-scrollbar-thumb,.check-zoom-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28)}
+#details::-webkit-scrollbar-thumb,.check-zoom-wrap::-webkit-scrollbar-thumb{background:rgba(15,39,64,.28)}
 #details::-webkit-scrollbar-track{background:transparent;margin:18px 0}
 #app #details .head{
-  margin:12px;padding:14px 16px;border-radius:22px;
-  background:linear-gradient(135deg,rgba(45,212,191,.38),rgba(129,140,248,.30));
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px rgba(2,8,23,.28);
+  margin:12px;padding:14px 16px;border-radius:22px;color:#fff;
+  background:linear-gradient(135deg,#0ea5e9,#3b6ee0);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 12px 26px rgba(40,100,190,.32);
 }
 .logo-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;border-radius:15px;
-  background:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 16px rgba(2,8,23,.25)}
-.logo-title{font-size:19px;text-shadow:0 1px 10px rgba(2,8,23,.35)}
+  background:rgba(255,255,255,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px rgba(20,60,120,.25)}
+.logo-title{font-size:19px;text-shadow:0 1px 8px rgba(20,60,120,.35)}
+.logo-sub{opacity:.9}
 #details .body{padding:6px 18px 22px}
 
 /* ---------- الحقول ---------- */
@@ -452,108 +455,108 @@ body{background:#000;color:var(--ink)}
 .input-block label.en-label{color:var(--mut)}
 .input-element{
   background:var(--field);color:var(--ink);
-  border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 14px;
-  box-shadow:inset 0 2px 6px rgba(2,8,23,.22);
+  border:1px solid var(--field-line);border-radius:14px;padding:10px 14px;
+  box-shadow:inset 0 2px 5px rgba(30,80,130,.10);
   transition:border-color .2s,box-shadow .2s,background .2s;
 }
-.input-element::placeholder{color:rgba(214,228,255,.38)}
-.input-element:hover{background:rgba(255,255,255,.11)}
-.input-element:focus{outline:0;border-color:#5eead4;background:rgba(255,255,255,.12);
-  box-shadow:0 0 0 3px rgba(45,212,191,.26),inset 0 2px 6px rgba(2,8,23,.18)}
-.input-element.invalid{border-color:rgba(251,113,133,.85);background:rgba(251,113,133,.12)}
+.input-element::placeholder{color:rgba(15,39,64,.38)}
+.input-element:hover{background:rgba(255,255,255,.75)}
+.input-element:focus{outline:0;border-color:#0284c7;background:rgba(255,255,255,.9);
+  box-shadow:0 0 0 3px rgba(2,132,199,.22),inset 0 2px 5px rgba(30,80,130,.06)}
+.input-element.invalid{border-color:rgba(225,29,72,.65);background:rgba(225,29,72,.07)}
 select.input-element,.opt-select{
-  color-scheme:dark;-webkit-appearance:none;-moz-appearance:none;appearance:none;
+  color-scheme:light;-webkit-appearance:none;-moz-appearance:none;appearance:none;
   padding-left:36px;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23cfe3ff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%230f2740' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:left 14px center;
 }
-select option{background:#161618;color:#eaf2ff}
-.opt-select{background-color:var(--field);color:var(--ink);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 12px 8px 32px;background-position:left 11px center}
-input[type=checkbox]{accent-color:#2dd4bf}
-.pin-btn{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#99f6e4;border-radius:999px;padding:6px 14px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);transition:background .2s,transform .2s}
-.pin-btn:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
-.liner-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+select option{background:#fff;color:#0f2740}
+.opt-select{background-color:var(--field);color:var(--ink);border:1px solid var(--field-line);border-radius:12px;padding:8px 12px 8px 32px;background-position:left 11px center}
+input[type=checkbox]{accent-color:#0284c7}
+.pin-btn{border:1px solid rgba(2,132,199,.4);background:rgba(255,255,255,.6);color:#0369a1;border-radius:999px;padding:6px 14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);transition:background .2s,transform .2s}
+.pin-btn:hover{background:rgba(255,255,255,.95);transform:translateY(-1px)}
+.liner-box{background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.85);border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
 .liner-check{color:var(--ink)}
 .check-option label{color:var(--mut)}
-.img-change{color:#5eead4}
-.custom-file-upload{border:1.5px dashed rgba(255,255,255,.38);background:rgba(255,255,255,.05);color:var(--mut);border-radius:16px;transition:background .2s,border-color .2s}
-.custom-file-upload:hover{background:rgba(255,255,255,.12);border-color:#5eead4;color:var(--ink)}
+.img-change{color:#0369a1}
+.custom-file-upload{border:1.5px dashed rgba(15,39,64,.35);background:rgba(255,255,255,.35);color:var(--mut);border-radius:16px;transition:background .2s,border-color .2s}
+.custom-file-upload:hover{background:rgba(255,255,255,.75);border-color:#0284c7;color:var(--ink)}
 
 /* ---------- زر الطباعة ---------- */
 #details .print-btn{
-  padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.4);
-  background:var(--accent-grad);color:#04202b;font-weight:800;letter-spacing:0;
-  box-shadow:0 12px 30px rgba(45,212,191,.38),inset 0 1px 0 rgba(255,255,255,.65);
+  padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.7);
+  background:var(--accent-grad);color:#fff;font-weight:800;letter-spacing:0;
+  box-shadow:0 12px 28px rgba(47,111,228,.4),inset 0 1px 0 rgba(255,255,255,.55);
   transition:transform .2s,box-shadow .2s,filter .2s;
 }
-#details .print-btn:hover:not(:disabled){background:var(--accent-grad);filter:brightness(1.08) saturate(1.1);transform:translateY(-1px);
-  box-shadow:0 16px 36px rgba(45,212,191,.5),inset 0 1px 0 rgba(255,255,255,.7)}
+#details .print-btn:hover:not(:disabled){background:var(--accent-grad);filter:brightness(1.07) saturate(1.1);transform:translateY(-1px);
+  box-shadow:0 16px 34px rgba(47,111,228,.5),inset 0 1px 0 rgba(255,255,255,.65)}
 #details .print-btn:active:not(:disabled){transform:translateY(0)}
-#details .print-btn:disabled{background:rgba(255,255,255,.09);color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.14);box-shadow:none}
+#details .print-btn:disabled{background:rgba(15,39,64,.08);color:rgba(15,39,64,.4);border-color:rgba(15,39,64,.1);box-shadow:none}
 
 /* ---------- شاشة اختيار البنك ---------- */
 #bank_selector>div{gap:16px}
 .bank_group{
   background:var(--glass);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);
   border:1px solid var(--glass-edge);border-radius:24px;padding:16px;
-  box-shadow:0 14px 34px rgba(2,8,23,.32),var(--glass-hi);
+  box-shadow:0 14px 32px rgba(30,80,130,.18),var(--glass-hi);
 }
-.bank_group_label{color:#f4f9ff}
+.bank_group_label{color:var(--ink)}
 .bank_group_label span{color:var(--mut)}
 .bank_selector_item{
-  background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.7);border-radius:16px;color:#334155;
-  box-shadow:0 4px 12px rgba(2,8,23,.18);
+  background:rgba(255,255,255,.92);border:1px solid #fff;border-radius:16px;color:#334e68;
+  box-shadow:0 4px 12px rgba(30,80,130,.14);
   transition:transform .2s,box-shadow .2s,background .2s;
 }
-.bank_selector_item:hover{background:#fff;border-color:#5eead4;color:#0f766e;transform:translateY(-3px);
-  box-shadow:0 0 0 2px #5eead4,0 14px 28px rgba(45,212,191,.35)}
+.bank_selector_item:hover{background:#fff;border-color:#0284c7;color:#0369a1;transform:translateY(-3px);
+  box-shadow:0 0 0 2px #0284c7,0 14px 26px rgba(2,132,199,.28)}
 
 /* ---------- شاشة الشيك ---------- */
-.check-title{color:#f4f9ff;padding:8px 20px;border-radius:999px;background:rgba(255,255,255,.1);
-  border:1px solid var(--glass-edge);box-shadow:var(--glass-hi);
+.check-title{color:var(--ink);padding:8px 20px;border-radius:999px;background:var(--glass);
+  border:1px solid var(--glass-edge);box-shadow:var(--glass-hi),0 8px 20px rgba(30,80,130,.14);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-.check-toolbar{background:var(--glass);border:1px solid var(--glass-edge);border-radius:999px;padding:6px 10px;box-shadow:var(--glass-hi),0 10px 28px rgba(2,8,23,.3);
-  -webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
-.check-toolbar button{background:rgba(255,255,255,.12);color:#eaf6ff;border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:5px 13px;transition:background .2s,border-color .2s}
-.check-toolbar button:hover{background:rgba(255,255,255,.24);border-color:#5eead4;color:#fff}
-.zoom-label{color:#fff}
-.check-tip{color:var(--mut);padding:6px 16px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
-#check{color:#0f172a;border:1px solid rgba(255,255,255,.55);border-radius:6px;
-  box-shadow:0 30px 70px rgba(2,8,23,.6),0 0 0 6px rgba(255,255,255,.08)}
-#check>div:hover{outline:1px dashed #0d9488}
+.check-toolbar{background:var(--glass);border:1px solid var(--glass-edge);border-radius:999px;padding:6px 10px;box-shadow:var(--glass-hi),0 10px 24px rgba(30,80,130,.18);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%)}
+.check-toolbar button{background:rgba(255,255,255,.65);color:var(--ink);border:1px solid rgba(15,39,64,.14);border-radius:999px;padding:5px 13px;transition:background .2s,border-color .2s}
+.check-toolbar button:hover{background:#fff;border-color:#0284c7;color:#0369a1}
+.zoom-label{color:var(--ink)}
+.check-tip{color:var(--mut);padding:6px 16px;border-radius:999px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.8)}
+#check{color:#0f172a;border:1px solid #fff;border-radius:6px;
+  box-shadow:0 26px 56px rgba(30,80,130,.35),0 0 0 6px rgba(255,255,255,.4)}
+#check>div:hover{outline:1px dashed #0369a1}
 #excel_check_frame{color:#0f172a}
 
 /* ---------- التقويم (flatpickr) ---------- */
 .flatpickr-calendar{
-  background:rgba(22,22,24,.78);color:#eaf2ff;
-  -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
-  border:1px solid rgba(255,255,255,.24);border-radius:22px;
-  box-shadow:0 26px 64px rgba(2,8,23,.65),inset 0 1px 0 rgba(255,255,255,.3);
+  background:rgba(255,255,255,.78);color:var(--ink);
+  -webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);
+  border:1px solid rgba(255,255,255,.95);border-radius:22px;
+  box-shadow:0 24px 54px rgba(30,80,130,.35),inset 0 1px 0 rgba(255,255,255,.95);
 }
-.flatpickr-current-month select,.flatpickr-current-month input.cur-year{color:#eaf2ff;color-scheme:dark}
+.flatpickr-current-month select,.flatpickr-current-month input.cur-year{color:var(--ink);color-scheme:light}
 .flatpickr-current-month select{max-width:none;width:auto;padding:2px 4px;cursor:pointer}
-.flatpickr-current-month select option{background:#161618;color:#eaf2ff}
-.flatpickr-prev-month svg,.flatpickr-next-month svg{fill:#d6e6ff}
-.flatpickr-prev-month:hover,.flatpickr-next-month:hover{background:rgba(255,255,255,.14)}
-.flatpickr-weekday{color:rgba(214,228,255,.55)}
-.flatpickr-day:hover{background:rgba(255,255,255,.16)}
-.flatpickr-day.today{border-color:#5eead4}
-.flatpickr-day.selected{background:var(--accent-grad);color:#04202b;border-color:transparent;font-weight:700}
-.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay,.flatpickr-day.flatpickr-disabled{color:rgba(214,228,255,.28)}
+.flatpickr-current-month select option{background:#fff;color:#0f2740}
+.flatpickr-prev-month svg,.flatpickr-next-month svg{fill:#0f2740}
+.flatpickr-prev-month:hover,.flatpickr-next-month:hover{background:rgba(15,39,64,.08)}
+.flatpickr-weekday{color:rgba(15,39,64,.55)}
+.flatpickr-day:hover{background:rgba(2,132,199,.14)}
+.flatpickr-day.today{border-color:#0284c7}
+.flatpickr-day.selected{background:var(--accent-grad);color:#fff;border-color:transparent;font-weight:700}
+.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay,.flatpickr-day.flatpickr-disabled{color:rgba(15,39,64,.28)}
 
 /* ---------- عناصر اللوحة القديمة (احتياطي لو استُخدمت) ---------- */
-.btn{background:rgba(255,255,255,.12);color:var(--ink);border:1px solid var(--glass-edge);border-radius:12px}
-.btn:hover{background:rgba(255,255,255,.2);color:#fff;border-color:#5eead4}
-.btn.primary{background:var(--accent-grad);color:#04202b;border-color:rgba(255,255,255,.4)}
-.btn.primary:hover{color:#04202b}
-.btn.danger{color:#fda4af;border-color:rgba(251,113,133,.45)}
+.btn{background:rgba(255,255,255,.65);color:var(--ink);border:1px solid rgba(15,39,64,.14);border-radius:12px}
+.btn:hover{background:#fff;color:#0369a1;border-color:#0284c7}
+.btn.primary{background:var(--accent-grad);color:#fff;border-color:rgba(255,255,255,.6)}
+.btn.primary:hover{color:#fff}
+.btn.danger{color:#e11d48;border-color:rgba(225,29,72,.4)}
 .stat,.card{background:var(--glass);border:1px solid var(--glass-edge);border-radius:20px;box-shadow:var(--glass-hi);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-.tbl th{background:rgba(255,255,255,.08);color:var(--mut)}
-.tbl td,.tbl th{border-bottom-color:rgba(255,255,255,.12)}
-::selection{background:rgba(45,212,191,.5);color:#fff}
+.tbl th{background:rgba(255,255,255,.5);color:var(--mut)}
+.tbl td,.tbl th{border-bottom-color:rgba(15,39,64,.1)}
+::selection{background:rgba(2,132,199,.3)}
 
 /* ---------- موبايل / شاشات ضيقة ---------- */
 @media (max-width:900px){
@@ -563,16 +566,15 @@ input[type=checkbox]{accent-color:#2dd4bf}
 
 /* ---------- لو المتصفح مش بيدعم الزجاج ---------- */
 @supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{background:rgba(24,24,26,.94)}
+  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{background:rgba(240,248,255,.96)}
 }
 @media (prefers-reduced-transparency:reduce){
   #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{
-    background:rgba(24,24,26,.95);-webkit-backdrop-filter:none;backdrop-filter:none}
+    background:rgba(240,248,255,.96);-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 
 /* ---------- الطباعة: ولا أثر للزجاج ---------- */
 @media print{
-  body::before,body::after{display:none!important}
   html,body{color:#0f172a}
   #app{padding:0!important;gap:0!important}
   #check_frame,#bank_selector{padding:0!important}
