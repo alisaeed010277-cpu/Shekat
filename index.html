@@ -397,6 +397,210 @@ function dragElement(el, side) {
 
 </style>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+<style id="glass-theme">
+/* ============================================================
+   Glass theme — لوحة التحكم على اليمين + تصميم زجاجي
+   (يُضاف بعد كل الأنماط الأصلية فيتغلّب عليها بدون المساس بالمنطق)
+   ============================================================ */
+:root{
+  --brand:#2dd4bf; --brand-d:#14b8a6;
+  --ink:#eef6ff; --mut:rgba(214,228,255,.62);
+  --line:rgba(255,255,255,.16); --card:rgba(255,255,255,.08);
+  --danger:#fb7185;
+  --glass:linear-gradient(160deg,rgba(255,255,255,.17),rgba(255,255,255,.05));
+  --glass-edge:rgba(255,255,255,.24);
+  --glass-hi:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.05);
+  --glass-drop:0 22px 56px rgba(2,8,23,.5);
+  --blur:blur(22px) saturate(165%);
+  --field:rgba(255,255,255,.08);
+  --accent-grad:linear-gradient(135deg,#2dd4bf,#38bdf8 58%,#818cf8);
+}
+
+/* ---------- الخلفية: أورورا + كور زجاجية بحواف حادّة (علشان الضبابية تبان) ---------- */
+html{background:#070d1a;scrollbar-color:rgba(255,255,255,.3) transparent}
+body{background:transparent;color:var(--ink)}
+body::before{
+  content:"";position:fixed;top:0;right:0;bottom:0;left:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(58% 50% at 86% 6%,rgba(45,212,191,.50),transparent 62%),
+    radial-gradient(50% 46% at 6% 18%,rgba(124,92,246,.46),transparent 64%),
+    radial-gradient(52% 48% at 18% 98%,rgba(244,114,182,.34),transparent 62%),
+    radial-gradient(44% 40% at 94% 92%,rgba(56,189,248,.36),transparent 62%),
+    linear-gradient(160deg,#07101f,#0b1730 55%,#12122b);
+}
+body::after{
+  content:"";position:fixed;top:0;right:0;bottom:0;left:0;z-index:-1;pointer-events:none;
+  background:
+    /* لمعة على الكرة الكبيرة */
+    radial-gradient(circle closest-side at 36% 30%,rgba(255,255,255,.55),transparent) right calc(10vmin + 150px) top 11vh / 26vmin 26vmin no-repeat,
+    radial-gradient(circle closest-side,#5eead4 0,#14b8a6 52%,#0f766e 99%,transparent 100%) right calc(10vmin + 150px) top 11vh / 38vmin 38vmin no-repeat,
+    radial-gradient(circle closest-side,#f0abfc 0,#8b5cf6 62%,#5b21b6 99%,transparent 100%) left 4vw top 56vh / 26vmin 26vmin no-repeat,
+    radial-gradient(circle closest-side,#fde68a 0,#fb923c 60%,#e11d48 99%,transparent 100%) right calc(8vmin + 270px) bottom 7vh / 17vmin 17vmin no-repeat;
+  opacity:.9;
+}
+
+/* ---------- التخطيط: اللوحة على اليمين ---------- */
+#app{padding:16px;gap:16px}
+#app #details{order:-1}          /* في الـ RTL: أول عنصر = أقصى اليمين */
+#bank_selector{padding:2px}
+#check_frame{padding:6px 4px}
+
+/* ---------- اللوحة الزجاجية ---------- */
+#app #details{
+  width:352px;height:calc(100vh - 32px);top:16px;
+  background:var(--glass);
+  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  border:1px solid var(--glass-edge);border-radius:30px;
+  box-shadow:var(--glass-drop),var(--glass-hi);
+  scrollbar-width:thin;
+}
+#details::-webkit-scrollbar-thumb,.check-zoom-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28)}
+#details::-webkit-scrollbar-track{background:transparent;margin:18px 0}
+#app #details .head{
+  margin:12px;padding:14px 16px;border-radius:22px;
+  background:linear-gradient(135deg,rgba(45,212,191,.38),rgba(129,140,248,.30));
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px rgba(2,8,23,.28);
+}
+.logo-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;border-radius:15px;
+  background:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 16px rgba(2,8,23,.25)}
+.logo-title{font-size:19px;text-shadow:0 1px 10px rgba(2,8,23,.35)}
+#details .body{padding:6px 18px 22px}
+
+/* ---------- الحقول ---------- */
+.input-block label{color:var(--ink)}
+.input-block label.en-label{color:var(--mut)}
+.input-element{
+  background:var(--field);color:var(--ink);
+  border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 14px;
+  box-shadow:inset 0 2px 6px rgba(2,8,23,.22);
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.input-element::placeholder{color:rgba(214,228,255,.38)}
+.input-element:hover{background:rgba(255,255,255,.11)}
+.input-element:focus{outline:0;border-color:#5eead4;background:rgba(255,255,255,.12);
+  box-shadow:0 0 0 3px rgba(45,212,191,.26),inset 0 2px 6px rgba(2,8,23,.18)}
+.input-element.invalid{border-color:rgba(251,113,133,.85);background:rgba(251,113,133,.12)}
+select.input-element,.opt-select{
+  color-scheme:dark;-webkit-appearance:none;-moz-appearance:none;appearance:none;
+  padding-left:36px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23cfe3ff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 14px center;
+}
+select option{background:#0e1a2e;color:#eaf2ff}
+.opt-select{background-color:var(--field);color:var(--ink);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 12px 8px 32px;background-position:left 11px center}
+input[type=checkbox]{accent-color:#2dd4bf}
+.pin-btn{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#99f6e4;border-radius:999px;padding:6px 14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);transition:background .2s,transform .2s}
+.pin-btn:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+.liner-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.liner-check{color:var(--ink)}
+.check-option label{color:var(--mut)}
+.img-change{color:#5eead4}
+.custom-file-upload{border:1.5px dashed rgba(255,255,255,.38);background:rgba(255,255,255,.05);color:var(--mut);border-radius:16px;transition:background .2s,border-color .2s}
+.custom-file-upload:hover{background:rgba(255,255,255,.12);border-color:#5eead4;color:var(--ink)}
+
+/* ---------- زر الطباعة ---------- */
+#details .print-btn{
+  padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.4);
+  background:var(--accent-grad);color:#04202b;font-weight:800;letter-spacing:0;
+  box-shadow:0 12px 30px rgba(45,212,191,.38),inset 0 1px 0 rgba(255,255,255,.65);
+  transition:transform .2s,box-shadow .2s,filter .2s;
+}
+#details .print-btn:hover:not(:disabled){background:var(--accent-grad);filter:brightness(1.08) saturate(1.1);transform:translateY(-1px);
+  box-shadow:0 16px 36px rgba(45,212,191,.5),inset 0 1px 0 rgba(255,255,255,.7)}
+#details .print-btn:active:not(:disabled){transform:translateY(0)}
+#details .print-btn:disabled{background:rgba(255,255,255,.09);color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.14);box-shadow:none}
+
+/* ---------- شاشة اختيار البنك ---------- */
+#bank_selector>div{gap:16px}
+.bank_group{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+  border:1px solid var(--glass-edge);border-radius:24px;padding:16px;
+  box-shadow:0 14px 34px rgba(2,8,23,.32),var(--glass-hi);
+}
+.bank_group_label{color:#f4f9ff}
+.bank_group_label span{color:var(--mut)}
+.bank_selector_item{
+  background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.7);border-radius:16px;color:#334155;
+  box-shadow:0 4px 12px rgba(2,8,23,.18);
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.bank_selector_item:hover{background:#fff;border-color:#5eead4;color:#0f766e;transform:translateY(-3px);
+  box-shadow:0 0 0 2px #5eead4,0 14px 28px rgba(45,212,191,.35)}
+
+/* ---------- شاشة الشيك ---------- */
+.check-title{color:#f4f9ff;padding:8px 20px;border-radius:999px;background:rgba(255,255,255,.1);
+  border:1px solid var(--glass-edge);box-shadow:var(--glass-hi);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.check-toolbar{background:var(--glass);border:1px solid var(--glass-edge);border-radius:999px;padding:6px 10px;box-shadow:var(--glass-hi),0 10px 28px rgba(2,8,23,.3);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
+.check-toolbar button{background:rgba(255,255,255,.12);color:#eaf6ff;border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:5px 13px;transition:background .2s,border-color .2s}
+.check-toolbar button:hover{background:rgba(255,255,255,.24);border-color:#5eead4;color:#fff}
+.zoom-label{color:#fff}
+.check-tip{color:var(--mut);padding:6px 16px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+#check{color:#0f172a;border:1px solid rgba(255,255,255,.55);border-radius:6px;
+  box-shadow:0 30px 70px rgba(2,8,23,.6),0 0 0 6px rgba(255,255,255,.08)}
+#check>div:hover{outline:1px dashed #0d9488}
+#excel_check_frame{color:#0f172a}
+
+/* ---------- التقويم (flatpickr) ---------- */
+.flatpickr-calendar{
+  background:rgba(14,26,46,.74);color:#eaf2ff;
+  -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
+  border:1px solid rgba(255,255,255,.24);border-radius:22px;
+  box-shadow:0 26px 64px rgba(2,8,23,.65),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.flatpickr-current-month select,.flatpickr-current-month input.cur-year{color:#eaf2ff;color-scheme:dark}
+.flatpickr-current-month select{max-width:none;width:auto;padding:2px 4px;cursor:pointer}
+.flatpickr-current-month select option{background:#0e1a2e;color:#eaf2ff}
+.flatpickr-prev-month svg,.flatpickr-next-month svg{fill:#d6e6ff}
+.flatpickr-prev-month:hover,.flatpickr-next-month:hover{background:rgba(255,255,255,.14)}
+.flatpickr-weekday{color:rgba(214,228,255,.55)}
+.flatpickr-day:hover{background:rgba(255,255,255,.16)}
+.flatpickr-day.today{border-color:#5eead4}
+.flatpickr-day.selected{background:var(--accent-grad);color:#04202b;border-color:transparent;font-weight:700}
+.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay,.flatpickr-day.flatpickr-disabled{color:rgba(214,228,255,.28)}
+
+/* ---------- عناصر اللوحة القديمة (احتياطي لو استُخدمت) ---------- */
+.btn{background:rgba(255,255,255,.12);color:var(--ink);border:1px solid var(--glass-edge);border-radius:12px}
+.btn:hover{background:rgba(255,255,255,.2);color:#fff;border-color:#5eead4}
+.btn.primary{background:var(--accent-grad);color:#04202b;border-color:rgba(255,255,255,.4)}
+.btn.primary:hover{color:#04202b}
+.btn.danger{color:#fda4af;border-color:rgba(251,113,133,.45)}
+.stat,.card{background:var(--glass);border:1px solid var(--glass-edge);border-radius:20px;box-shadow:var(--glass-hi);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.tbl th{background:rgba(255,255,255,.08);color:var(--mut)}
+.tbl td,.tbl th{border-bottom-color:rgba(255,255,255,.12)}
+::selection{background:rgba(45,212,191,.5);color:#fff}
+
+/* ---------- موبايل / شاشات ضيقة ---------- */
+@media (max-width:900px){
+  #app{padding:10px;gap:12px}
+  #app #details{order:0;width:100%;height:auto;position:static;border-radius:26px}
+}
+
+/* ---------- لو المتصفح مش بيدعم الزجاج ---------- */
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{background:rgba(16,28,50,.94)}
+}
+@media (prefers-reduced-transparency:reduce){
+  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{
+    background:rgba(16,28,50,.95);-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
+/* ---------- الطباعة: ولا أثر للزجاج ---------- */
+@media print{
+  body::before,body::after{display:none!important}
+  html,body{color:#0f172a}
+  #app{padding:0!important;gap:0!important}
+  #check_frame,#bank_selector{padding:0!important}
+  *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  #check{border-radius:0!important;box-shadow:none!important;border:0!important}
+}
+</style>
+
 </head>
 <body>
 <div id="app">
