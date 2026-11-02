@@ -407,7 +407,7 @@ function dragElement(el, side) {
   --ink:#eef6ff; --mut:rgba(214,228,255,.62);
   --line:rgba(255,255,255,.16); --card:rgba(255,255,255,.08);
   --danger:#fb7185;
-  --glass:linear-gradient(160deg,rgba(255,255,255,.17),rgba(255,255,255,.05));
+  --glass:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
   --glass-edge:rgba(255,255,255,.24);
   --glass-hi:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.05);
   --glass-drop:0 22px 56px rgba(2,8,23,.5);
@@ -416,29 +416,9 @@ function dragElement(el, side) {
   --accent-grad:linear-gradient(135deg,#2dd4bf,#38bdf8 58%,#818cf8);
 }
 
-/* ---------- الخلفية: أورورا + كور زجاجية بحواف حادّة (علشان الضبابية تبان) ---------- */
-html{background:#070d1a;scrollbar-color:rgba(255,255,255,.3) transparent}
-body{background:transparent;color:var(--ink)}
-body::before{
-  content:"";position:fixed;top:0;right:0;bottom:0;left:0;z-index:-2;pointer-events:none;
-  background:
-    radial-gradient(58% 50% at 86% 6%,rgba(45,212,191,.50),transparent 62%),
-    radial-gradient(50% 46% at 6% 18%,rgba(124,92,246,.46),transparent 64%),
-    radial-gradient(52% 48% at 18% 98%,rgba(244,114,182,.34),transparent 62%),
-    radial-gradient(44% 40% at 94% 92%,rgba(56,189,248,.36),transparent 62%),
-    linear-gradient(160deg,#07101f,#0b1730 55%,#12122b);
-}
-body::after{
-  content:"";position:fixed;top:0;right:0;bottom:0;left:0;z-index:-1;pointer-events:none;
-  background:
-    /* لمعة على الكرة الكبيرة */
-    radial-gradient(circle closest-side at 36% 30%,rgba(255,255,255,.55),transparent) right calc(10vmin + 150px) top 11vh / 26vmin 26vmin no-repeat,
-    radial-gradient(circle closest-side,#5eead4 0,#14b8a6 52%,#0f766e 99%,transparent 100%) right calc(10vmin + 150px) top 11vh / 38vmin 38vmin no-repeat,
-    radial-gradient(circle closest-side,#f0abfc 0,#8b5cf6 62%,#5b21b6 99%,transparent 100%) left 4vw top 56vh / 26vmin 26vmin no-repeat,
-    radial-gradient(circle closest-side,#fde68a 0,#fb923c 60%,#e11d48 99%,transparent 100%) right calc(8vmin + 270px) bottom 7vh / 17vmin 17vmin no-repeat;
-  opacity:.9;
-}
-
+/* ---------- الخلفية: أسود سادة ---------- */
+html{background:#000;scrollbar-color:rgba(255,255,255,.3) transparent}
+body{background:#000;color:var(--ink)}
 /* ---------- التخطيط: اللوحة على اليمين ---------- */
 #app{padding:16px;gap:16px}
 #app #details{order:-1}          /* في الـ RTL: أول عنصر = أقصى اليمين */
@@ -487,7 +467,7 @@ select.input-element,.opt-select{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23cfe3ff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:left 14px center;
 }
-select option{background:#0e1a2e;color:#eaf2ff}
+select option{background:#161618;color:#eaf2ff}
 .opt-select{background-color:var(--field);color:var(--ink);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:8px 12px 8px 32px;background-position:left 11px center}
 input[type=checkbox]{accent-color:#2dd4bf}
 .pin-btn{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#99f6e4;border-radius:999px;padding:6px 14px;
@@ -547,14 +527,14 @@ input[type=checkbox]{accent-color:#2dd4bf}
 
 /* ---------- التقويم (flatpickr) ---------- */
 .flatpickr-calendar{
-  background:rgba(14,26,46,.74);color:#eaf2ff;
+  background:rgba(22,22,24,.78);color:#eaf2ff;
   -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
   border:1px solid rgba(255,255,255,.24);border-radius:22px;
   box-shadow:0 26px 64px rgba(2,8,23,.65),inset 0 1px 0 rgba(255,255,255,.3);
 }
 .flatpickr-current-month select,.flatpickr-current-month input.cur-year{color:#eaf2ff;color-scheme:dark}
 .flatpickr-current-month select{max-width:none;width:auto;padding:2px 4px;cursor:pointer}
-.flatpickr-current-month select option{background:#0e1a2e;color:#eaf2ff}
+.flatpickr-current-month select option{background:#161618;color:#eaf2ff}
 .flatpickr-prev-month svg,.flatpickr-next-month svg{fill:#d6e6ff}
 .flatpickr-prev-month:hover,.flatpickr-next-month:hover{background:rgba(255,255,255,.14)}
 .flatpickr-weekday{color:rgba(214,228,255,.55)}
@@ -583,11 +563,11 @@ input[type=checkbox]{accent-color:#2dd4bf}
 
 /* ---------- لو المتصفح مش بيدعم الزجاج ---------- */
 @supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{background:rgba(16,28,50,.94)}
+  #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{background:rgba(24,24,26,.94)}
 }
 @media (prefers-reduced-transparency:reduce){
   #app #details,.bank_group,.check-toolbar,.check-title,.flatpickr-calendar,.stat,.card{
-    background:rgba(16,28,50,.95);-webkit-backdrop-filter:none;backdrop-filter:none}
+    background:rgba(24,24,26,.95);-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 
 /* ---------- الطباعة: ولا أثر للزجاج ---------- */
